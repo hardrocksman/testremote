@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+  		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ssi?useUnicode=true&amp;characterEncoding=utf8"/>
+	    <property name="username" value="root"/>
+    	<property name="password" value="root"/>
+    	<property name="initialSize" value="10" />
+		<property name="maxActive" value="15"/>
+		<property name="maxIdle" value="100" />
+		<property name="minIdle" value="5" />
+		<property name="maxWait" value="20" />   
+	</bean>
+    
+    <!-- mybatis文件配置，扫描所有mapper文件 -->
+    <bean id="sqlSessionFactory"
+          class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:configLocation="classpath:mybatis-config.xml"
+          p:mapperLocations="classpath:mapper/*.xml">
+          <!-- configLocation为mybatis属性 mapperLocations为所有mapper-->
+    </bean>
+       
+   	<!-- spring与mybatis整合配置，扫描所有dao -->
+ 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+        p:basePackage="com.zhl.test.rmi.rmiserver.dao"
+        p:sqlSessionFactoryBeanName="sqlSessionFactory">
+    </bean>
+    
+    <!-- 设定transactionManager -->
+	<bean id="transactionManager"
+	 class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	 <property name="dataSource" ref="dataSource" />
+	</bean>
+    
+	<!--启动spring注解功能-->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+	<bean id="userInfo" class="com.zhl.test.rmi.rmiserver.service.impl.UserService" />  
+  
+    <bean id="serviceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">  
+        <property name="service" ref="userInfo" />  
+        <!-- 定义服务名 -->  
+        <property name="serviceName" value="user" />  
+        <property name="serviceInterface" value="com.zhl.test.rmi.core.service.IUserService" />  
+        <property name="registryPort" value="8088" />  
+    </bean>  
+    
+</beans>
