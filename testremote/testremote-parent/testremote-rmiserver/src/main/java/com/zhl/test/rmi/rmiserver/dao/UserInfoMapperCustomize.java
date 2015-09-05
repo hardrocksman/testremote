@@ -3,7 +3,7 @@ package com.zhl.test.rmi.rmiserver.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.zhl.test.rmi.core.model.UserInfo;
+import com.zhl.test.rmi.rmiserver.model.UserInfo;
 
 
 public interface UserInfoMapperCustomize {

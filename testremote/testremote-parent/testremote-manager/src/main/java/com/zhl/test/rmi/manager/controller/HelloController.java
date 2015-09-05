@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.zhl.test.rmi.core.model.UserInfo;
+import com.zhl.test.rmi.core.model.UserInfoCore;
 import com.zhl.test.rmi.core.service.IUserService;
 
 
@@ -34,11 +34,11 @@ public class HelloController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getUsers")
-	public List<UserInfo> getUsers(HttpServletResponse response,HttpServletRequest request){
+	public List<UserInfoCore> getUsers(HttpServletResponse response,HttpServletRequest request){
 		String userName = request.getParameter("userName");
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("userName", userName + "%");
-		List<UserInfo> userList = userService.getUser(param);
+		List<UserInfoCore> userList = userService.getUser(param);
 		return userList;
 	}
 }

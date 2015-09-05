@@ -35,7 +35,7 @@
        
    	<!-- spring与mybatis整合配置，扫描所有dao -->
  	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
-        p:basePackage="com.zhl.test.rmi.rmiserver.dao"
+        p:basePackage="com.zhl.test.rmi.rmiwebserver.dao"
         p:sqlSessionFactoryBeanName="sqlSessionFactory">
     </bean>
     
@@ -49,7 +49,7 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	
 	
-	<bean id="userInfo" class="com.zhl.test.rmi.rmiserver.service.impl.UserService" />  
+	<bean id="userInfo" class="com.zhl.test.rmi.rmiwebserver.service.impl.UserService" />  
   
     <bean id="serviceExporter" class="org.springframework.remoting.rmi.RmiServiceExporter">  
         <property name="service" ref="userInfo" />  

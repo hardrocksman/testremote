@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans 
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+	">
+	
+    <!--  <context:component-scan base-package="com.abc.abcpay.manager.serviceImpl"/>-->
+     <bean id="userService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">  
+        <property name="serviceUrl" value="http://localhost:8082/testremote-hessianserver/userService.htm" />  
+    	<property name="serviceInterface" value="com.zhl.test.rmi.core.service.IUserService" />  
+    	<!-- By default the value is false. As a matter of fact, it doesn't influence the test result, the overloaded method still be supported -->  
+    	<property name="overloadEnabled" value="false" />  
+    </bean>  
+    
+</beans>

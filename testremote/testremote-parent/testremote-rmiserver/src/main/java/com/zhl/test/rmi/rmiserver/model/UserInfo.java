@@ -1,4 +1,4 @@
-package com.zhl.test.rmi.core.model;
+package com.zhl.test.rmi.rmiserver.model;
 
 import java.io.Serializable;
 
